@@ -21,41 +21,36 @@ import com.codahale.metrics.annotation.Timed;
 @RestController
 @RequestMapping("/api")
 public class PatientCommandResource {
-	
-	
+
 	private final Logger log = LoggerFactory.getLogger(PatientCommandResource.class);
-	
+
 	@Autowired
 	PatientResourceApi patientResourceApi;
-	
-	
-    @PostMapping("/patients/registerPatient")
-    @Timed
-    public void createPatient(@RequestBody PatientDTO patientDTO) {
-    	
-    	log.info("**********************  Entered register patient");
-    	  	
-    	patientResourceApi.createPatientUsingPOST(patientDTO);
-    	
-    }
 
-    
-    @PutMapping("/patients/updateProfile")
-    @Timed
-    public void updatePatient(@RequestBody PatientDTO patientDTO) {
-       
-    	patientResourceApi.updatePatientUsingPUT(patientDTO);
-    	
-    }
+	@PostMapping("/patients/registerPatient")
+	@Timed
+	public void createPatient(@RequestBody PatientDTO patientDTO) {
 
+		log.info("**********************  Entered register patient");
 
-    @DeleteMapping("/patients/deletePatient/{id}")
-    @Timed
-    public void deletePatient(@PathVariable Long id) {
-    
-    	patientResourceApi.deletePatientUsingDELETE(id);
-    
-    }
+		patientResourceApi.createPatientUsingPOST(patientDTO);
 
+	}
+
+	@PutMapping("/patients/updateProfile")
+	@Timed
+	public void updatePatient(@RequestBody PatientDTO patientDTO) {
+
+		patientResourceApi.updatePatientUsingPUT(patientDTO);
+
+	}
+
+	@DeleteMapping("/patients/deletePatient/{id}")
+	@Timed
+	public void deletePatient(@PathVariable Long id) {
+
+		patientResourceApi.deletePatientUsingDELETE(id);
+
+	}
 
 }
