@@ -1,7 +1,5 @@
 package com.bytatech.ayoos.patientapigateway.config;
 
-import com.bytatech.ayoos.patientapigateway.security.AuthoritiesConstants;
-
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +13,8 @@ import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResour
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.web.filter.CorsFilter;
+
+import com.bytatech.ayoos.patientapigateway.security.AuthoritiesConstants;
 
 import io.github.jhipster.security.AjaxLogoutSuccessHandler;
 
@@ -47,8 +47,8 @@ public class OAuth2SsoConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-            .csrf().disable();
-                /*.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+            .csrf()
+                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
             .and()
             .addFilterBefore(corsFilter, CsrfFilter.class)
             .headers()
@@ -63,7 +63,7 @@ public class OAuth2SsoConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/api/**").authenticated()
             .antMatchers("/management/health").permitAll()
             .antMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN)
-            .anyRequest().permitAll();*/
+            .anyRequest().permitAll();
     }
 
     /**
