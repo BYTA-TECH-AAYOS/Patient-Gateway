@@ -1,6 +1,5 @@
 package com.bytatech.ayoos.patientapigateway.web.rest;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,17 +18,21 @@ import com.codahale.metrics.annotation.Timed;
  */
 @RestController
 @RequestMapping("/api")
-public class StateQueryResource{
-	
+public class StateQueryResource {
+
 	@Autowired
 	StateResourceApi stateResourceApi;
-	
-    @GetMapping("/_search/states")
-    @Timed
-    public ResponseEntity<List<StateDTO>> searchStates(@RequestParam String query,int page, int size, ArrayList<String> sort) {
-     
-    	//return patientResourceApi.searchPatientsUsingGET(query, offset, page, pageNumber, pageSize, paged, size, sort, sortSorted, sortUnsorted, unpaged)
-    	return null;
-    }
-	
+
+	@GetMapping("/states")
+	@Timed
+	public ResponseEntity<List<StateDTO>> searchStates(@RequestParam(required = false) Long offset,
+			@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageNumber,
+			@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) Boolean paged,
+			@RequestParam(required = false) Integer size,
+			@RequestParam(value = "sort", required = false) List<String> sort,
+			@RequestParam(required = false) Boolean sortSorted, @RequestParam(required = false) Boolean sortUnsorted,
+			@RequestParam(required = false) Boolean unpaged) {
+		return stateResourceApi.getAllStatesUsingGET(offset, page, pageNumber, pageSize, paged, size, sort, sortSorted,
+				sortUnsorted, unpaged);
+	}
 }
