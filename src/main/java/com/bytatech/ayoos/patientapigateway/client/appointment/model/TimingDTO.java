@@ -24,13 +24,13 @@ public class TimingDTO   {
   private LocalDate day = null;
 
   @JsonProperty("endTo")
-  private OffsetDateTime endTo = null;
+  private Date endTo = null;
 
   @JsonProperty("id")
   private Long id = null;
 
   @JsonProperty("startFrom")
-  private OffsetDateTime startFrom = null;
+  private Date startFrom = null;
 
   public TimingDTO day(LocalDate day) {
     this.day = day;
@@ -53,7 +53,7 @@ public class TimingDTO   {
     this.day = day;
   }
 
-  public TimingDTO endTo(OffsetDateTime endTo) {
+  public TimingDTO endTo(Date endTo) {
     this.endTo = endTo;
     return this;
   }
@@ -66,11 +66,11 @@ public class TimingDTO   {
 
   @Valid
 
-  public OffsetDateTime getEndTo() {
+  public Date getEndTo() {
     return endTo;
   }
 
-  public void setEndTo(OffsetDateTime endTo) {
+  public void setEndTo(Date endTo) {
     this.endTo = endTo;
   }
 
@@ -94,7 +94,7 @@ public class TimingDTO   {
     this.id = id;
   }
 
-  public TimingDTO startFrom(OffsetDateTime startFrom) {
+  public TimingDTO startFrom(Date startFrom) {
     this.startFrom = startFrom;
     return this;
   }
@@ -107,11 +107,11 @@ public class TimingDTO   {
 
   @Valid
 
-  public OffsetDateTime getStartFrom() {
+  public Date getStartFrom() {
     return startFrom;
   }
 
-  public void setStartFrom(OffsetDateTime startFrom) {
+  public void setStartFrom(Date startFrom) {
     this.startFrom = startFrom;
   }
 

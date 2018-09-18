@@ -24,13 +24,13 @@ public class Timing   {
   private LocalDate day = null;
 
   @JsonProperty("endTo")
-  private OffsetDateTime endTo = null;
+  private Date endTo = null;
 
   @JsonProperty("id")
   private Long id = null;
 
   @JsonProperty("startFrom")
-  private OffsetDateTime startFrom = null;
+  private Date startFrom = null;
 
   public Timing day(LocalDate day) {
     this.day = day;
@@ -53,7 +53,7 @@ public class Timing   {
     this.day = day;
   }
 
-  public Timing endTo(OffsetDateTime endTo) {
+  public Timing endTo(Date endTo) {
     this.endTo = endTo;
     return this;
   }
@@ -66,11 +66,11 @@ public class Timing   {
 
   @Valid
 
-  public OffsetDateTime getEndTo() {
+  public Date getEndTo() {
     return endTo;
   }
 
-  public void setEndTo(OffsetDateTime endTo) {
+  public void setEndTo(Date endTo) {
     this.endTo = endTo;
   }
 
@@ -94,7 +94,7 @@ public class Timing   {
     this.id = id;
   }
 
-  public Timing startFrom(OffsetDateTime startFrom) {
+  public Timing startFrom(Date startFrom) {
     this.startFrom = startFrom;
     return this;
   }
@@ -107,11 +107,11 @@ public class Timing   {
 
   @Valid
 
-  public OffsetDateTime getStartFrom() {
+  public Date getStartFrom() {
     return startFrom;
   }
 
-  public void setStartFrom(OffsetDateTime startFrom) {
+  public void setStartFrom(Date startFrom) {
     this.startFrom = startFrom;
   }
 
