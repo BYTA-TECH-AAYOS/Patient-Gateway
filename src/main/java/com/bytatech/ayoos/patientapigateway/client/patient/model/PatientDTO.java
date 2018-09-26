@@ -16,7 +16,7 @@ import io.swagger.annotations.ApiModelProperty;
  * PatientDTO
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2018-09-14T15:25:11.683+05:30[Asia/Calcutta]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2018-09-26T14:33:52.180+05:30[Asia/Calcutta]")
 
 public class PatientDTO   {
   @JsonProperty("contactInfoId")

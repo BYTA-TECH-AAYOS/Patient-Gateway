@@ -25,7 +25,7 @@ public class CityQueryResource {
 
 	@GetMapping("/cities")
 	@Timed
-	public ResponseEntity<List<CityDTO>> searchCountries(@RequestParam(required = false) Long offset,
+	public ResponseEntity<List<CityDTO>> searchCities(@RequestParam(required = false) Long offset,
 			@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageNumber,
 			@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) Boolean paged,
 			@RequestParam(required = false) Integer size,
@@ -34,6 +34,19 @@ public class CityQueryResource {
 			@RequestParam(required = false) Boolean unpaged) {
 		return cityResourceApi.getAllCitiesUsingGET(offset, page, pageNumber, pageSize, paged, size, sort, sortSorted,
 				sortUnsorted, unpaged);
+	}
+
+	@GetMapping("/cities/findByStateName")
+	@Timed
+	public ResponseEntity<List<CityDTO>> getAllCitiesByStateName(@RequestParam(required = false) String name,
+			@RequestParam(required = false) Long offset, @RequestParam(required = false) Integer page,
+			@RequestParam(required = false) Integer pageNumber, @RequestParam(required = false) Integer pageSize,
+			@RequestParam(required = false) Boolean paged, @RequestParam(required = false) Integer size,
+			@RequestParam(value = "sort", required = false) List<String> sort,
+			@RequestParam(required = false) Boolean sortSorted, @RequestParam(required = false) Boolean sortUnsorted,
+			@RequestParam(required = false) Boolean unpaged) {
+		return cityResourceApi.getAllCitiesByStateNameUsingGET(name, offset, page, pageNumber, pageSize, paged, size,
+				sort, sortSorted, sortUnsorted, unpaged);
 	}
 
 }

@@ -18,8 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bytatech.ayoos.patientapigateway.client.appointment.model.PaymentInfo;
-import com.bytatech.ayoos.patientapigateway.client.appointment.model.RestVariable;
+import com.bytatech.ayoos.patientapigateway.client.appointment.api.AppointmentQueryResourceApi;
 import com.bytatech.ayoos.patientapigateway.client.appointment.model.Appointment;
 import com.bytatech.ayoos.patientapigateway.client.appointment.model.AppointmentDTO;
 import com.bytatech.ayoos.patientapigateway.client.appointment.model.AppointmentDetails;
@@ -28,13 +27,13 @@ import com.bytatech.ayoos.patientapigateway.client.appointment.model.DataRespons
 import com.bytatech.ayoos.patientapigateway.client.appointment.model.DoctorInfo;
 import com.bytatech.ayoos.patientapigateway.client.appointment.model.HistoricTaskInstanceQueryRequest;
 import com.bytatech.ayoos.patientapigateway.client.appointment.model.OpenAppointmentResponse;
+import com.bytatech.ayoos.patientapigateway.client.appointment.model.PaymentInfo;
+import com.bytatech.ayoos.patientapigateway.client.appointment.model.RestVariable;
 import com.bytatech.ayoos.patientapigateway.client.appointment.model.Slot;
 import com.bytatech.ayoos.patientapigateway.client.appointment.model.TaskQueryRequest;
 import com.bytatech.ayoos.patientapigateway.client.appointment.model.TaskResponse;
 import com.bytatech.ayoos.patientapigateway.doctor.model.Doctor;
 import com.bytatech.ayoos.patientapigateway.repository.search.DoctorSearchRepository;
-import com.bytatech.ayoos.patientapigateway.client.appointment.api.AppointmentQueryResourceApi;
-
 import com.codahale.metrics.annotation.Timed;
 
 import io.swagger.annotations.ApiParam;
@@ -42,11 +41,11 @@ import io.swagger.annotations.ApiParam;
 @RestController
 @RequestMapping("/api/query")
 public class AppointmentQueryResource {
-	
+
 	@Autowired
-	DoctorSearchRepository doctorSearchRepository ;
+	DoctorSearchRepository doctorSearchRepository;
 	@Autowired
-	private  AppointmentQueryResourceApi appointmentQueryResourceApi;
+	private AppointmentQueryResourceApi appointmentQueryResourceApi;
 
 	private final Logger log = LoggerFactory.getLogger(AppointmentQueryResource.class);
 
@@ -102,8 +101,16 @@ public class AppointmentQueryResource {
 			@ApiParam(value = "Select tasks that has been claimed or assigned to user or waiting to claim by user (candidate user or groups).") @Valid @RequestParam(value = "candidateOrAssigned", required = false) String candidateOrAssigned,
 			@ApiParam(value = "Select tasks with the given category. Note that this is the task category, not the category of the process definition (namespace within the BPMN Xml). ") @Valid @RequestParam(value = "category", required = false) String category) {
 
-		return appointmentQueryResourceApi.getTasksUsingGET(active, assignee, assigneeLike, candidateGroup, candidateGroups, candidateOrAssigned, candidateUser, category, createdAfter, createdBefore, createdOn, delegationState, description, dueAfter, dueBefore, dueOn, excludeSubTasks, executionId, includeProcessVariables, includeTaskLocalVariables, involvedUser, maximumPriority, minimumPriority, name, nameLike, owner, ownerLike, maximumPriority, processDefinitionId, processDefinitionKey, processDefinitionKeyLike, processDefinitionName, processDefinitionNameLike, processInstanceBusinessKey, processInstanceBusinessKeyLike, processInstanceId, taskDefinitionKey, taskDefinitionKeyLike, tenantId, tenantIdLike, unassigned, withoutDueDate, withoutTenantId);
+		return appointmentQueryResourceApi.getTasksUsingGET(active, assignee, assigneeLike, candidateGroup,
+				candidateGroups, candidateOrAssigned, candidateUser, category, createdAfter, createdBefore, createdOn,
+				delegationState, description, dueAfter, dueBefore, dueOn, excludeSubTasks, executionId,
+				includeProcessVariables, includeTaskLocalVariables, involvedUser, maximumPriority, minimumPriority,
+				name, nameLike, owner, ownerLike, maximumPriority, processDefinitionId, processDefinitionKey,
+				processDefinitionKeyLike, processDefinitionName, processDefinitionNameLike, processInstanceBusinessKey,
+				processInstanceBusinessKeyLike, processInstanceId, taskDefinitionKey, taskDefinitionKeyLike, tenantId,
+				tenantIdLike, unassigned, withoutDueDate, withoutTenantId);
 	}
+
 	@PostMapping("/tasks")
 	public ResponseEntity<DataResponse> getQueryResult(@RequestBody TaskQueryRequest taskQueryRequest) {
 		return appointmentQueryResourceApi.getQueryResultUsingPOST(taskQueryRequest);
@@ -167,7 +174,6 @@ public class AppointmentQueryResource {
 		return null;
 	}
 
-
 	@GetMapping("/appointments")
 	@Timed
 	public ResponseEntity<List<AppointmentDTO>> getAllAppointments() {
@@ -178,7 +184,8 @@ public class AppointmentQueryResource {
 	/**
 	 * GET /appointments/:id : get the "id" appointment.
 	 *
-	 * @param id the id of the appointmentDTO to retrieve
+	 * @param id
+	 *            the id of the appointmentDTO to retrieve
 	 * @return the ResponseEntity with status 200 (OK) and with body the
 	 *         appointmentDTO, or with status 404 (Not Found)
 	 */
@@ -186,8 +193,8 @@ public class AppointmentQueryResource {
 	@Timed
 	public ResponseEntity<AppointmentDTO> getAppointment(@PathVariable Long id) {
 		log.debug("REST request to get Appointment : {}", id);
-		return  appointmentQueryResourceApi.getAppointmentUsingGET(id);
-		
+		return appointmentQueryResourceApi.getAppointmentUsingGET(id);
+
 	}
 
 	@PostMapping("/getHistoricTask")
@@ -197,7 +204,8 @@ public class AppointmentQueryResource {
 	}
 
 	@GetMapping("/myAppointments")
-	public ResponseEntity<List<OpenAppointmentResponse>> getMyAppointments(@RequestParam(value = "name", required = false) String name,
+	public ResponseEntity<List<OpenAppointmentResponse>> getMyAppointments(
+			@RequestParam(value = "name", required = false) String name,
 			@RequestParam(value = "nameLike", required = false) String nameLike,
 			@RequestParam(value = "description", required = false) String description,
 			@RequestParam(value = "priority", required = false) String priority,
@@ -241,7 +249,14 @@ public class AppointmentQueryResource {
 			@ApiParam(value = "Select tasks that has been claimed or assigned to user or waiting to claim by user (candidate user or groups).") @Valid @RequestParam(value = "candidateOrAssigned", required = false) String candidateOrAssigned,
 			@ApiParam(value = "Select tasks with the given category. Note that this is the task category, not the category of the process definition (namespace within the BPMN Xml). ") @Valid @RequestParam(value = "category", required = false) String category) {
 		log.info("Assignee is " + assignee);
-		return appointmentQueryResourceApi.getMyAppointmentsUsingGET(active, assignee, assigneeLike, candidateGroup, candidateGroups, candidateOrAssigned, candidateUser, category, createdAfter, createdBefore, createdOn, delegationState, description, dueAfter, dueBefore, dueOn, excludeSubTasks, executionId, includeProcessVariables, includeTaskLocalVariables, involvedUser, maximumPriority, minimumPriority, name, nameLike, owner, ownerLike, maximumPriority, processDefinitionId, processDefinitionKey, processDefinitionKeyLike, processDefinitionName, processDefinitionNameLike, processInstanceBusinessKey, processInstanceBusinessKeyLike, processInstanceId, taskDefinitionKey, taskDefinitionKeyLike, tenantId, tenantIdLike, unassigned, withoutDueDate, withoutTenantId);
+		return appointmentQueryResourceApi.getMyAppointmentsUsingGET(active, assignee, assigneeLike, candidateGroup,
+				candidateGroups, candidateOrAssigned, candidateUser, category, createdAfter, createdBefore, createdOn,
+				delegationState, description, dueAfter, dueBefore, dueOn, excludeSubTasks, executionId,
+				includeProcessVariables, includeTaskLocalVariables, involvedUser, maximumPriority, minimumPriority,
+				name, nameLike, owner, ownerLike, maximumPriority, processDefinitionId, processDefinitionKey,
+				processDefinitionKeyLike, processDefinitionName, processDefinitionNameLike, processInstanceBusinessKey,
+				processInstanceBusinessKeyLike, processInstanceId, taskDefinitionKey, taskDefinitionKeyLike, tenantId,
+				tenantIdLike, unassigned, withoutDueDate, withoutTenantId);
 	}
 
 	@GetMapping("/doctoInfo/{processInstanceId}")
@@ -263,18 +278,10 @@ public class AppointmentQueryResource {
 		return appointmentQueryResourceApi.getAppointmentInfoUsingGET(processInstanceId);
 	}
 
-
-
-
-    @GetMapping("/_search/doctors")
-	public Page<Doctor> getAllDoctors(Pageable pageable){
+	@GetMapping("/_search/doctors")
+	public Page<Doctor> getAllDoctors(Pageable pageable) {
 		log.debug("REST request to search all doctors for query {}");
 		return doctorSearchRepository.findAll(pageable);
 	}
-
-
-
-
-
 
 }
