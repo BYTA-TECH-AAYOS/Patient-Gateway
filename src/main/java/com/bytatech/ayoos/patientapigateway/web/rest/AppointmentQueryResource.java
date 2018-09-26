@@ -7,6 +7,8 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,6 +31,8 @@ import com.bytatech.ayoos.patientapigateway.client.appointment.model.OpenAppoint
 import com.bytatech.ayoos.patientapigateway.client.appointment.model.Slot;
 import com.bytatech.ayoos.patientapigateway.client.appointment.model.TaskQueryRequest;
 import com.bytatech.ayoos.patientapigateway.client.appointment.model.TaskResponse;
+import com.bytatech.ayoos.patientapigateway.doctor.model.Doctor;
+import com.bytatech.ayoos.patientapigateway.repository.search.DoctorSearchRepository;
 import com.bytatech.ayoos.patientapigateway.client.appointment.api.AppointmentQueryResourceApi;
 
 import com.codahale.metrics.annotation.Timed;
@@ -38,7 +42,9 @@ import io.swagger.annotations.ApiParam;
 @RestController
 @RequestMapping("/api/query")
 public class AppointmentQueryResource {
-
+	
+	@Autowired
+	DoctorSearchRepository doctorSearchRepository ;
 	@Autowired
 	private  AppointmentQueryResourceApi appointmentQueryResourceApi;
 
@@ -256,5 +262,19 @@ public class AppointmentQueryResource {
 	public ResponseEntity<Appointment> getAppointmentInfo(@PathVariable String processInstanceId) {
 		return appointmentQueryResourceApi.getAppointmentInfoUsingGET(processInstanceId);
 	}
+
+
+
+
+    @GetMapping("/_search/doctors")
+	public Page<Doctor> getAllDoctors(Pageable pageable){
+		log.debug("REST request to search all doctors for query {}");
+		return doctorSearchRepository.findAll(pageable);
+	}
+
+
+
+
+
 
 }
