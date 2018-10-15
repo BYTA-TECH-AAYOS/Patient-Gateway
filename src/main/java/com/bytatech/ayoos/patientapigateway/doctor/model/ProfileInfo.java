@@ -1,13 +1,18 @@
 package com.bytatech.ayoos.patientapigateway.doctor.model;
 
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
-
-import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
 import java.util.Objects;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.springframework.data.elasticsearch.annotations.Document;
 
 /**
  * A ProfileInfo.
@@ -41,6 +46,12 @@ public class ProfileInfo implements Serializable {
 
     @Column(name = "image_url")
     private String imageUrl;
+    
+    @Column(name = "image")
+    private byte[] image;
+
+    @Column(name = "image_content_type")
+    private String imageContentType;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
