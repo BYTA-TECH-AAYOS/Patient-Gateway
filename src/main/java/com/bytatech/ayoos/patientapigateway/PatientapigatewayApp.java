@@ -1,9 +1,10 @@
 package com.bytatech.ayoos.patientapigateway;
 
-import com.bytatech.ayoos.patientapigateway.config.ApplicationProperties;
-import com.bytatech.ayoos.patientapigateway.config.DefaultProfileUtil;
+import java.net.InetAddress;
+import java.util.Arrays;
+import java.util.Collection;
 
-import io.github.jhipster.config.JHipsterConstants;
+import javax.annotation.PostConstruct;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,16 +12,15 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.liquibase.LiquibaseProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
 
-import javax.annotation.PostConstruct;
-import java.net.InetAddress;
-import java.util.Arrays;
-import java.util.Collection;
+import com.bytatech.ayoos.patientapigateway.config.ApplicationProperties;
+import com.bytatech.ayoos.patientapigateway.config.DefaultProfileUtil;
+
+import io.github.jhipster.config.JHipsterConstants;
 
 @ComponentScan( excludeFilters = {
     @ComponentScan.Filter(com.bytatech.ayoos.patientapigateway.client.ExcludeFromComponentScan.class)
@@ -28,7 +28,7 @@ import java.util.Collection;
 @EnableFeignClients
 @SpringBootApplication
 @EnableConfigurationProperties({LiquibaseProperties.class, ApplicationProperties.class})
-@EnableDiscoveryClient
+//@EnableDiscoveryClient
 @EnableZuulProxy
 public class PatientapigatewayApp {
 

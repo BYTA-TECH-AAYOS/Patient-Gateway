@@ -9,6 +9,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.geo.Distance;
+import org.springframework.data.geo.Metrics;
+import org.springframework.data.geo.Point;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,6 +47,7 @@ public class AppointmentQueryResource {
 
 	@Autowired
 	DoctorSearchRepository doctorSearchRepository;
+	
 	@Autowired
 	private AppointmentQueryResourceApi appointmentQueryResourceApi;
 
@@ -282,6 +286,15 @@ public class AppointmentQueryResource {
 	public Page<Doctor> getAllDoctors(Pageable pageable) {
 		log.debug("REST request to search all doctors for query {}");
 		return doctorSearchRepository.findAll(pageable);
+	}
+
+	@GetMapping("/_search/doctors/findByNearByLocation/{lat}/{lon}/{distance}/{unit}")
+	public Page<Doctor> getNearByDoctors(@PathVariable String lat, @PathVariable String lon,
+			@PathVariable String distance, @PathVariable String unit, Pageable pageable) {
+		Point point = new Point(Double.parseDouble(lat), Double.parseDouble(lon));
+
+		Distance value = new Distance(Double.parseDouble(distance), Metrics.valueOf(unit));
+		return doctorSearchRepository.findByLocationNear(point, value, pageable);
 	}
 
 }

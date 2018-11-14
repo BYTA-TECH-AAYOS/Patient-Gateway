@@ -25,7 +25,7 @@ eureka:
     client:
         service-url:
             defaultZone: http://104.196.121.188:8761/eureka/
-
+        enabled: false
 spring:
     profiles:
         active: dev
